@@ -75,4 +75,43 @@ body {
 
 /*--SECCION DE TAREAS--*/
 
+.seccion-tareas h3{
+    color: var(--white);
+    margin-bottom: 20px;
+
+}
+
+.seccion-tareas li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, var(--blue-dark), var(--green));
+    border-radius: 15px;
+    padding: 10px;
+    color: var(--white);
+    margin: 5px 0;
+
+}
+
+.seccion-tareas i {
+    font-size: 25px;
+
+}
+
+.seccion-tareas > ul p {
+    font-size: 1.2rem;
+    
+}
+
+.seccion-tareas i:hover {
+    color: var(--blue-light);
+    cursor: pointer;
+
+}
+
+.line-through {
+    text-decoration: line-through;
+    color: var(--blue-light);
+}
+
 
