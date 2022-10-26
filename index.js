@@ -7,8 +7,9 @@ const botonEnter = document.querySelector('#boton-enter');
 const check = 'fa-check-circle';
 const uncheck = 'fa-circle';
 const lineThrougt = 'line-through';
+let LIST;
 
-let id = 0;
+let id;
 
 
 
@@ -57,7 +58,11 @@ function tareaRealizada(element){
     element.classList.toggle(check);
     element.classList.toggle(uncheck);
     element.parentNode.querySelector('.text').classList.toggle(lineThrougt);
+    LIST[element.id].realizado = LIST[element.id].realizado ? false : true;
 
+    // console.log(LIST);
+    // console.log(LIST[element.id]);
+    // console.log(LIST[element.id].realizado);
 }
 
 //Función Tarea Eliminada
@@ -66,7 +71,8 @@ function tareaEliminada(element){
     // console.log(element.parentNode);
     // console.log(element.parentNode.parentNode);
     element.parentNode.parentNode.removeChild(element.parentNode);
-
+    LIST[element.id].eliminado = true;
+    console.log(LIST);
 }
 
 
@@ -78,13 +84,18 @@ botonEnter.addEventListener('click', ()=> {
     
     if (tarea){
         agregarTarea(tarea, id, false, false);
+        LIST.push({
+            nombre: tarea,
+            id: id,
+            realizado: false,
+            eliminado: false
+        });
 
+        localStorage.setItem('TODO', JSON.stringify(LIST));
 
         input.value = '';
         id++;
     }
-
-
 });
 
 
@@ -94,14 +105,20 @@ document.addEventListener('keyup', function(event) {
     
         if (tarea){
             agregarTarea(tarea, id, false, false);
+            LIST.push({
+                nombre : tarea,
+                id : id,
+                realizado : false,
+                eliminado : false
+            });
 
+            localStorage.setItem('TODO', JSON.stringify(LIST));
 
             input.value = '';
             id++;
+            console.log(LIST);
         }
-
     }
-
 });
 
 
@@ -120,10 +137,38 @@ lista.addEventListener('click', function(event){
         console.log("eliminado");
     }
 
+    localStorage.setItem('TODO', JSON.stringify(LIST));
+
     // console.log(element);
     // console.log(element.attributes);
     // console.log(element.attributes.data);
     // console.log(element.attributes.data.value);
     
 });
+
+
+//Get local Storage
+
+let data = localStorage.getItem('TODO');
+
+if (data){
+    LIST = JSON.parse(data);
+    console.log(LIST);
+    
+    id = LIST.length;
+    cargarLista(LIST);
+
+} else{
+    LIST = [];
+    id = 0;
+
+}
+
+function cargarLista(array){
+    array.forEach(function(item){
+        agregarTarea(item.nombre, item.id, item.realizado,item.eliminado);
+    });
+}
+
+
 
